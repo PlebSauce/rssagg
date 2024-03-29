@@ -12,7 +12,7 @@ import (
 	"github.com/google/uuid"
 )
 
-const creatuser = `-- name: Creatuser :one
+const createuser = `-- name: Createuser :one
 INSERT INTO users (id, created_at, updated_at, name, api_key)
 VALUES ($1, $2, $3, $4,
  encode(sha256(random()::text::bytea), 'hex')
@@ -20,15 +20,15 @@ VALUES ($1, $2, $3, $4,
 RETURNING id, created_at, updated_at, name, api_key
 `
 
-type CreatuserParams struct {
+type CreateuserParams struct {
 	ID        uuid.UUID
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	Name      string
 }
 
-func (q *Queries) Creatuser(ctx context.Context, arg CreatuserParams) (User, error) {
-	row := q.db.QueryRowContext(ctx, creatuser,
+func (q *Queries) Createuser(ctx context.Context, arg CreateuserParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, createuser,
 		arg.ID,
 		arg.CreatedAt,
 		arg.UpdatedAt,
