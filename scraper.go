@@ -58,6 +58,8 @@ func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feed database.Feed) {
 			description.Valid = true
 		}
 
+		//"Mon, 02 Jan 2006 15:04:05 MST" here is basic format
+		//need to create string slice of formats, then loop through each
 		//can change layout for parse to accept many different formats
 		pubAt, err := time.Parse(time.RFC1123Z, item.PubDate)
 		if err != nil {
